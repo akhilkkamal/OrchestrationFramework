@@ -1,0 +1,86 @@
+{
+	"1_test_dag": {
+		"layer_1": {
+			"entity_1": {
+				"operator": {
+					"type": "dummy"
+				},
+				"max_batch": 3
+			}
+		},
+		"layer_2": {
+			"entity_1": {
+				"operator": {
+					"type": "python",
+					"imports": ["pythonCallableTest:rest_operator"],
+					"python_callable_method": ["rest_operator(source, layer, entity)"]
+				},
+				"max_batch": 3
+			},
+			"entity_2": {
+				"operator": {
+					"type": "python",
+					"imports": ["pythonCallableTest:nothing"],
+					"python_callable_method": ["nothing()"]
+				},
+				"max_batch": 3
+			}
+		}
+	},
+	"test_one_dag": {
+		"dummy_layer": {
+			"dummy_entity_1": {
+				"operator": {
+					"type": "dummy"
+				},
+				"max_batch": 3
+			}
+		},
+		"python_layer": {
+			"python_entity_1": {
+				"operator": {
+					"type": "python",
+					"imports": ["pythonCallableTest:rest_operator"],
+					"python_callable_method": ["rest_operator(source, layer, entity)"]
+				},
+				"max_batch": 3
+			},
+			"python_entity_2": {
+				"operator": {
+					"type": "python",
+					"imports": ["pythonCallableTest:nothing"],
+					"python_callable_method": ["nothing()"]
+				},
+				"max_batch": 3
+			}
+		},
+		"bash_layer": {
+			"bash_entity_1": {
+				"operator": {
+					"type": "bash",
+					"bash_command": "echo 'Hello!!! run_id={{ run_id }} | dag_run={{ dag_run }}'"
+				},
+				"max_batch": 3
+			},
+			"bash_entity_2": {
+				"operator": {
+					"type": "bash",
+					"bash_command": "echo 'Hello Airflow User!!!'"
+				},
+				"max_batch": 3
+			}
+		},
+		"spark_layer": {
+			"spark_entity_1": {
+				"operator": {
+					"type": "spark",
+					"application": "/home/abhilashop/python_workspace/wordCount.py",
+					"conn_id": "spark_local",
+					"name": "wordCount",
+					"packages": ""
+				},
+				"max_batch": 3
+			}
+		}
+	}
+}
