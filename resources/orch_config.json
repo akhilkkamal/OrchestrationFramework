@@ -1,0 +1,18 @@
+[{
+	"id": "1",
+	"process_name": "test1",
+	"sub_process_name": "base_layer",
+	"object_name": "obj1",
+	"job_type": "glue",
+	"job_id": "Akk_test",
+	"job_config_id": "1"
+
+}, {
+	"id": "2",
+	"process_name": "test1",
+	"sub_process_name": "base_layer",
+	"object_name": "obj2",
+	"job_type": "glue",
+	"job_id": "Akk_test",
+	"job_config_id": "2"
+}]
