@@ -12,7 +12,8 @@ class ObjectWiseDagTemplate(IDagTemplate):
 
     def create_dag(self):
         # 1. Operator factory is needed.
-        # 2. Task creator is needed
+        # 2. Task creator is needed.
+        # 3. Initial and end operators should be moved to a common class.
         dag = DAG('dag_id', schedule_interval='sch_interval', default_args='default_args')
 
         with dag:
