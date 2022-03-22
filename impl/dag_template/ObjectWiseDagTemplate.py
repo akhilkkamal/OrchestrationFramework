@@ -3,6 +3,7 @@ from airflow.models import Pool, Variable
 from airflow.operators.dummy import DummyOperator
 from airflow import DAG
 from airflow.utils.task_group import TaskGroup
+from functools import reduce
 
 
 class ObjectWiseDagTemplate(IDagTemplate):
@@ -22,12 +23,11 @@ class ObjectWiseDagTemplate(IDagTemplate):
             layers = []
             for object_name, layer_configs in self._df.groupby(['object_name']):
                 with TaskGroup(object_name + '_group') as layer_group:
-                    objects = []
+                    objects = [ ]
                     for layer_config in layer_configs:
-                        with TaskGroup(object_name + '_' + layer_config['sub_process_name'] + '_group') as object_group:
-                            objects.append(self.create_task(object_name, layer_config))
-                start.set_downstream(layer_group)
-                end.set_upstream(layer_group)
+                        objects.append(self.create_task(object_name, layer_config))
+                    reduce(lambda t1, t2: t1 >> t2, objects)
                 layers.append(layer_group)
+            start >> layers >> end
 
         return dag
